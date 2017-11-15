@@ -1,0 +1,14 @@
+{
+  "name": "mobile-rest",
+  "version": "0.0.0",
+  "description": "MobileREST",
+  "main": "server.js",
+  "author": {
+    "name": "Алексей"
+  },
+  "dependencies": {
+    "express": "4.16.2",
+    "body-parser": "1.18.2",
+    "mongoose": "4.13.2"
+  }
+}
