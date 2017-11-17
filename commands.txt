@@ -1,0 +1,3 @@
+db.User.update({name: 'Alexey'}, {$push: {favourites:"15"}}) - push array item
+db.User.update({name: 'Alexey'}, {$pull: {favourites:"15"}}) - pull array item
+
