@@ -46,10 +46,10 @@ app.use(expressValidator({
 
 app.use(function (req, res, next) {
     res.locals.user_name = req.body.name || null;
+    //var user_login = res.locals.user_name;
     next();
 });
-
-global.User_name1;
+//global.User_name1;
 
 PlacesList = require('./Models/PlacesList');
 User = require('./Models/User');
@@ -105,7 +105,7 @@ app.delete('/PlacesList/:_id', function (req, res) {
 
 app.put('/addToFavourite/:_id', function (req, res) {
     var id = req.params._id;
-    var username = global.User_name1;
+    var username = res.locals.user_name;
     User.AddToFavourite(id, username, function (err, response) {
         if (err) {
             throw err;
@@ -116,7 +116,7 @@ app.put('/addToFavourite/:_id', function (req, res) {
 
 app.put('/deleteFromFavourite/:_id', function (req, res) {
     var id = req.params._id;
-    var username = global.User_name1;
+    var username = res.locals.user_name;
     User.DeleteFromFavourite(id, username, function (err, response) {
         if (err) {
             throw err;
@@ -191,15 +191,12 @@ passport.deserializeUser(function(id, done) {
 app.post('/login',
   passport.authenticate('local'),
   function(req, res) {
-      //res.json("{response: success login, user_name:" + req.body.name + "}")
-      global.User_name1 = res.locals.user_name;
-      res.json("{response: success login, user_name:" + res.locals.user_name + "}")
+      res.send("{" + '"login"' + ':"' + res.locals.user_name + '"' + "}");
   });
 
 app.get('/logout', function(req, res){
     req.logout();
-    global.User_name1 = null;
-    res.json("{response: success log out}");
+    res.SendStatus(200);
 });
 
 app.listen(3000, function () {
