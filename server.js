@@ -46,13 +46,50 @@ app.use(expressValidator({
 
 app.use(function (req, res, next) {
     res.locals.user_name = req.body.name || null;
-    //var user_login = res.locals.user_name;
     next();
 });
-//global.User_name1;
 
 PlacesList = require('./Models/PlacesList');
 User = require('./Models/User');
+Location = require('./Models/Location');
+
+app.get('/Location', function (req, res) {
+    Location.GetLocations(function (err, location) {
+        if (err) {
+            throw err;
+        }
+        res.json(location);
+    });
+})
+
+app.get('/Location/:_id', function (req, res) {
+    Location.GetLocationById(req.params._id, function (err, location) {
+        if (err) {
+            throw err;
+        }
+        res.json(location);
+    });
+})
+
+app.post('/Location', function (req, res) {
+    var place = req.body;
+    Location.AddLocation(place, function (err, location) {
+        if (err) {
+            throw err;
+        }
+        res.json(location);
+    });
+})
+
+app.delete('/Location/:_id', function (req, res) {
+    var id = req.params._id;
+    Location.DeleteLocation(id, function (err, location) {
+        if (err) {
+            throw err;
+        }
+        res.json(location);
+    });
+})
 
 app.get('/PlacesList', function (req, res) {
     PlacesList.GetPlacesList(function (err, placesList) {
@@ -118,6 +155,28 @@ app.put('/deleteFromFavourite/:_id', function (req, res) {
     var id = req.params._id;
     var username = res.locals.user_name;
     User.DeleteFromFavourite(id, username, function (err, response) {
+        if (err) {
+            throw err;
+        }
+        res.json(response);
+    });
+})
+
+app.put('/addToFavouriteLocation/:_id', function (req, res) {
+    var id = req.params._id;
+    var username = res.locals.user_name;
+    User.AddToFavouriteLocation(id, username, function (err, response) {
+        if (err) {
+            throw err;
+        }
+        res.json(response);
+    });
+})
+
+app.put('/deleteFromFavouriteLocation/:_id', function (req, res) {
+    var id = req.params._id;
+    var username = res.locals.user_name;
+    User.DeleteFromFavouriteLocation(id, username, function (err, response) {
         if (err) {
             throw err;
         }

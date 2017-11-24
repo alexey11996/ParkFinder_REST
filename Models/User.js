@@ -17,6 +17,9 @@ var UserSchema = mongoose.Schema({
     },
     favourites: {
         type: Array
+    },
+    locations: {
+        type: Array
     }
 });
 
@@ -47,6 +50,7 @@ module.exports.comparePassword = function (candidatePassword, hash, callback) {
     });
 }
 
+//PlacesList Favourite
 module.exports.AddToFavourite = function (Place_id, UserName, callback) {
     User.findOneAndUpdate({ 'name': UserName }, { $push: { favourites: Place_id } }, {new : true}, callback);
 }
@@ -54,3 +58,13 @@ module.exports.AddToFavourite = function (Place_id, UserName, callback) {
 module.exports.DeleteFromFavourite = function (Place_id, UserName, callback) {
     User.findOneAndUpdate({ 'name': UserName }, { $pull: { favourites: Place_id } }, { new: true }, callback);
 }
+
+//Location Favourite
+module.exports.AddToFavouriteLocation = function (location_id, UserName, callback) {
+    User.findOneAndUpdate({ 'name': UserName }, { $push: { locations: location_id } }, { new: true }, callback);
+}
+
+module.exports.DeleteFromFavouriteLocation = function (location_id, UserName, callback) {
+    User.findOneAndUpdate({ 'name': UserName }, { $pull: { locations: location_id } }, { new: true }, callback);
+}
+
