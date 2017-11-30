@@ -1,3 +1,12 @@
 db.User.update({name: 'Alexey'}, {$push: {favourites:"15"}}) - push array item
 db.User.update({name: 'Alexey'}, {$pull: {favourites:"15"}}) - pull array item
 
+http://localhost:3000/Location - List Of Locaitons
+http://localhost:3000/Location/:_id - Location by ID
+http://localhost:3000/PlacesList - List of Places
+http://localhost:3000/PlacesList:_id - Place by ID
+http://localhost:3000/addToFavourite/:_id - Add Place to Favourite
+http://localhost:3000/deleteFromFavourite/:_id - Delete From Favourite
+http://localhost:3000/login - Login User
+http://localhost:3000/register - Regidter User
+

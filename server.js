@@ -11,7 +11,7 @@ var session = require('express-session')
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
 
-mongoose.connect('mongodb://127.0.0.1:27017/parkfinder', { useMongoClient: true });
+mongoose.connect('mongodb://alex:123@ds157500.mlab.com:57500/parkfinder', { useMongoClient: true });
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
