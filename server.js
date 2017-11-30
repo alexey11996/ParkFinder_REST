@@ -258,6 +258,10 @@ app.get('/logout', function(req, res){
     res.SendStatus(200);
 });
 
-app.listen(8000, function () {
-    console.log('Server started on port 8000')
-})
+//app.listen(8000, function () {
+//    console.log('Server started on port 8000')
+//})
+
+app.listen(process.env.PORT || 3000, function () {
+    console.log("Server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
