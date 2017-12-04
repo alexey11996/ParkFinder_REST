@@ -140,9 +140,9 @@ app.delete('/PlacesList/:_id', function (req, res) {
     });
 })
 
-app.put('/addToFavourite/:_name', function (req, res) {
+app.put('/addToFavourite/:_name/:_username', function (req, res) {
     var pname = req.params._name;
-    var username = res.locals.user_name;
+    var username = req.params._username;
     User.AddToFavourite(pname, username, function (err, response) {
         if (err) {
             throw err;
@@ -163,9 +163,9 @@ app.get('/getFavourites/:_username', function (req, res) {
     });
 })
 
-app.put('/deleteFromFavourite/:_name', function (req, res) {
+app.put('/deleteFromFavourite/:_name/:_username', function (req, res) {
     var pname = req.params._name
-    var username = res.locals.user_name;
+    var username = req.params._username;
     User.DeleteFromFavourite(pname, username, function (err, response) {
         if (err) {
             throw err;
