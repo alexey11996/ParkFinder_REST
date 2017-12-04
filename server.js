@@ -45,7 +45,7 @@ app.use(expressValidator({
 }));
 
 app.use(function (req, res, next) {
-    res.locals.user_name = req.body.name || null;
+    var UName = res.locals.user_name = req.body.name || null;
     next();
 });
 
@@ -140,10 +140,10 @@ app.delete('/PlacesList/:_id', function (req, res) {
     });
 })
 
-app.put('/addToFavourite/:_id', function (req, res) {
-    var id = req.params._id;
+app.put('/addToFavourite/:_name', function (req, res) {
+    var pname = req.params._name;
     var username = res.locals.user_name;
-    User.AddToFavourite(id, username, function (err, response) {
+    User.AddToFavourite(pname, username, function (err, response) {
         if (err) {
             throw err;
         }
@@ -151,10 +151,22 @@ app.put('/addToFavourite/:_id', function (req, res) {
     });
 })
 
-app.put('/deleteFromFavourite/:_id', function (req, res) {
-    var id = req.params._id;
+app.get('/getFavourites/:_username', function (req, res) {
+    var username = req.params._username;
+    var array_name = null;
+    User.GetFavouritePlaces(username, function (err, response) {
+        array_name = response.favourites;
+        PlacesList.GetFavorPlacesByNames(array_name, function (err, fav_places) {
+            console.log(array_name);
+            res.json(fav_places);
+        });
+    });
+})
+
+app.put('/deleteFromFavourite/:_name', function (req, res) {
+    var pname = req.params._name
     var username = res.locals.user_name;
-    User.DeleteFromFavourite(id, username, function (err, response) {
+    User.DeleteFromFavourite(pname, username, function (err, response) {
         if (err) {
             throw err;
         }
@@ -221,7 +233,7 @@ passport.use(new LocalStrategy(
     { usernameField: "name", passwordField: "password" },
   function(name, password, done) {
       User.getUserByUsername(name, function(err, user){
-          if(err) throw err;
+          if (err) throw err;
           if(!user){
               return done(null, false, {message: 'Unknown User'});
           }
@@ -250,7 +262,9 @@ passport.deserializeUser(function(id, done) {
 app.post('/login',
   passport.authenticate('local'),
   function(req, res) {
-      res.send("{" + '"login"' + ':"' + res.locals.user_name + '"' + "}");
+      User.getUserByUsername(res.locals.user_name, function (err, user) {
+          res.json(user);
+      });
   });
 
 app.get('/logout', function(req, res){

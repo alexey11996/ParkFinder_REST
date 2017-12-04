@@ -51,12 +51,16 @@ module.exports.comparePassword = function (candidatePassword, hash, callback) {
 }
 
 //PlacesList Favourite
-module.exports.AddToFavourite = function (Place_id, UserName, callback) {
-    User.findOneAndUpdate({ 'name': UserName }, { $push: { favourites: Place_id } }, {new : true}, callback);
+module.exports.AddToFavourite = function (Placen, UserName, callback) {
+    User.findOneAndUpdate({ 'name': UserName }, { $push: { favourites: Placen } }, {new : true}, callback);
 }
 
-module.exports.DeleteFromFavourite = function (Place_id, UserName, callback) {
-    User.findOneAndUpdate({ 'name': UserName }, { $pull: { favourites: Place_id } }, { new: true }, callback);
+module.exports.DeleteFromFavourite = function (Placen, UserName, callback) {
+    User.findOneAndUpdate({ 'name': UserName }, { $pull: { favourites: Placen } }, { new: true }, callback);
+}
+
+module.exports.GetFavouritePlaces = function (username, callback) {
+    User.findOne({ 'name': username }, { favourites: 1 , _id: 0}, callback);
 }
 
 //Location Favourite

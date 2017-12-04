@@ -37,6 +37,13 @@ module.exports.GetPlaceById = function (id, callback) {
     PlacesList.findById(id, callback);
 }
 
+module.exports.GetFavorPlacesByNames = function (PlacesNames, callback) {
+    var string = PlacesNames;
+    console.log('This is ' + string);
+    PlacesList.find({ "PlaceName": { $in: PlacesNames} }, callback);
+}
+
+
 module.exports.AddPlace = function (place, callback) {
     PlacesList.create(place, callback);
 }
