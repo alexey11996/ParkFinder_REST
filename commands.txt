@@ -5,8 +5,8 @@ http://localhost:3000/Location - List Of Locaitons
 http://localhost:3000/Location/:_id - Location by ID
 http://localhost:3000/PlacesList - List of Places
 http://localhost:3000/PlacesList:_id - Place by ID
-http://localhost:3000/addToFavourite/:_name - Add Place to Favourite
-http://localhost:3000/deleteFromFavourite/:_name - Delete From Favourite
+http://localhost:3000/addToFavourite/:_name/:_username - Add Place to Favourite
+http://localhost:3000/deleteFromFavourite/:_name/:_username - Delete From Favourite
 http://localhost:3000/login - Login User
 http://localhost:3000/register - Regidter User
 
